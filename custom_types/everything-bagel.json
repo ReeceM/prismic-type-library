@@ -1,0 +1,185 @@
+{
+  "name": "everything-bagel",
+  "author": "Reece M",
+  "username": "ReeceM",
+  "description": "A test of all libs",
+  "custom_type": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "uid"
+        }
+      },
+      "title": {
+        "type": "StructuredText",
+        "config": {
+          "single": "heading1, heading2, heading3, heading4, heading5, heading6",
+          "label": "title",
+          "placeholder": "Title Placeholder"
+        }
+      },
+      "rich_text": {
+        "type": "StructuredText",
+        "config": {
+          "multi": "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, rtl",
+          "label": "rich text"
+        }
+      },
+      "image": {
+        "type": "Image",
+        "config": {
+          "constraint": {},
+          "thumbnails": [
+            {
+              "name": "other_field",
+              "width": 24,
+              "height": 24
+            }
+          ],
+          "label": "image"
+        }
+      },
+      "content_relation": {
+        "type": "Link",
+        "config": {
+          "select": "document",
+          "label": "content relation"
+        }
+      },
+      "link": {
+        "type": "Link",
+        "config": {
+          "label": "link"
+        }
+      },
+      "media_link": {
+        "type": "Link",
+        "config": {
+          "select": "media",
+          "label": "media link"
+        }
+      },
+      "date": {
+        "type": "Date",
+        "config": {
+          "label": "date"
+        }
+      },
+      "timestamp": {
+        "type": "Timestamp",
+        "config": {
+          "label": "timestamp"
+        }
+      },
+      "color": {
+        "type": "Color",
+        "config": {
+          "label": "color"
+        }
+      },
+      "number": {
+        "type": "Number",
+        "config": {
+          "label": "number"
+        }
+      },
+      "keytext": {
+        "type": "Text",
+        "config": {
+          "label": "keytext"
+        }
+      },
+      "select": {
+        "type": "Select",
+        "config": {
+          "options": [
+            "option 1",
+            "option 2",
+            "option 3"
+          ],
+          "default_value": "option 1",
+          "label": "select",
+          "placeholder": "select field"
+        }
+      },
+      "boolean": {
+        "type": "Boolean",
+        "config": {
+          "default_value": false,
+          "label": "boolean"
+        }
+      },
+      "embed_field": {
+        "type": "Embed",
+        "config": {
+          "label": "embed field"
+        }
+      },
+      "geo_point": {
+        "type": "GeoPoint",
+        "config": {
+          "label": "geo point"
+        }
+      },
+      "group": {
+        "type": "Group",
+        "config": {
+          "fields": {
+            "key_text_in_group": {
+              "type": "Text",
+              "config": {
+                "label": "key text in group"
+              }
+            }
+          },
+          "label": "group"
+        }
+      },
+      "body": {
+        "type": "Slices",
+        "fieldset": "Slice zone",
+        "config": {
+          "labels": {
+            "slice_zone": []
+          },
+          "choices": {
+            "slice_zone": {
+              "type": "Slice",
+              "fieldset": "Slice Zone",
+              "description": "Slice Description",
+              "icon": "all_inclusive",
+              "display": "list",
+              "non-repeat": {},
+              "repeat": {
+                "slice_has_image": {
+                  "type": "Image",
+                  "config": {
+                    "constraint": {},
+                    "thumbnails": [],
+                    "label": "Slice has image"
+                  }
+                },
+                "another_image_in_slice": {
+                  "type": "Image",
+                  "config": {
+                    "constraint": {},
+                    "thumbnails": [],
+                    "label": "another image in slice"
+                  }
+                },
+                "title_in_slice": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading1, heading2, heading3, heading4, heading5, heading6",
+                    "label": "title in slice"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,20 +1,28 @@
 {
-  "name": "with-tailwindcss",
-  "version": "1.0.0",
+  "name": "prismic-type-library",
+  "version": "0.1.0",
+  "author": {
+    "name": "ReeceM",
+    "email": "reecestevenmay@gmail.com"
+  },
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
+    "dev": "npm run index && next",
+    "build": "npm run index && next build",
+    "start": "next start",
+    "index": "node utils/indexer.js"
   },
   "dependencies": {
-    "next": "latest",
+    "@headlessui/react": "^0.2.0",
+    "next": "^10.0.9",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "swr": "^0.3.11"
   },
   "devDependencies": {
+    "@tailwindcss/ui": "^0.7.2",
     "autoprefixer": "10.0.2",
-    "postcss": "8.1.7",
-    "tailwindcss": "^2.0.1"
+    "postcss": "^8.2.8",
+    "tailwindcss": "^2.0.3"
   },
   "license": "MIT"
 }

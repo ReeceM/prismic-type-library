@@ -10,9 +10,12 @@ export default function CreatePage({ links }) {
   const [description, setDescription] = useState()
   const [file, setFile] = useState()
   const [website, setWebsite] = useState('')
+  const [loading, setLoading] = useState(false)
 
   function handleSubmit(e) {
     e.preventDefault()
+
+    setLoading(true);
 
     // handle the honeypot value
     if (website.length >= 1) {
@@ -193,6 +196,7 @@ export default function CreatePage({ links }) {
                         </div>
                       </div>
                     </div>
+                    <input type="url" name="website" placeholder="what was it that Pooh Bear got honey from, this is that" id="website" onChange={e => setWebsite(e.target.value)} className="sr-only" aria-disabled="true" />
                     <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                       <button
                         type="submit"

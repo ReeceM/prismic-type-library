@@ -4,23 +4,24 @@ import Banner from '../components/Banner'
 import { CenteredHero } from '../components/Hero'
 import TypesTable from '../components/TypesTable';
 import { useEffect, useState } from 'react';
-export default function IndexPage({ links }) {
+import { data } from '../public/index.json';
+export default function IndexPage({ links, types }) {
 
-  const [types, setTypes] = useState([])
+  // const [types, setTypes] = useState([])
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    fetch('index.json')
-      .then(res => res.json())
-      .then((res) => {
-        setTypes(res.data);
-      })
-      .catch(e => {
-        console.error(e)
-      })
+  //   fetch('index.json')
+  //     .then(res => res.json())
+  //     .then((res) => {
+  //       setTypes(res.data);
+  //     })
+  //     .catch(e => {
+  //       console.error(e)
+  //     })
 
-    return () => { }
-  }, [])
+  //   return () => { }
+  // }, [])
 
   return (
     <>
@@ -64,7 +65,9 @@ export async function getStaticProps() {
     { href: 'https://prismic.io', label: 'Prismic CMS' },
   ];
 
+  let types = data;
+
   return {
-    props: { links },
+    props: { links, types },
   }
 }

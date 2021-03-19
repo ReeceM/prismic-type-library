@@ -36,6 +36,7 @@ export default function IndexPage({ links }) {
           linkText: 'The Link'
         }}
         /> */}
+
         <CenteredHero
           slice={{
             eyebrow: "Prismic Type Library",
@@ -57,7 +58,7 @@ export default function IndexPage({ links }) {
 export async function getStaticProps() {
   const links = [
     { href: '/', label: 'Custom Types' },
-    { href: 'https://github.com/ReeceM/prismic-type-library/issues/new', label: 'Submit a Type' },
+    { href: '/types/create', label: 'Submit a Type' },
     { href: 'https://github.com/ReeceM/prismic-type-library/discussions', label: 'Help' },
     { href: 'https://github.com/ReeceM/prismic-type-library', label: 'Readme' },
     { href: 'https://prismic.io', label: 'Prismic CMS' },

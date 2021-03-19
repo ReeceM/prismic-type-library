@@ -54,7 +54,7 @@ const TypesTable = ({ types }) => (
         }
       </Table >
     )
-    : <span> Well, so far there isn't much submitted, or, there is a whole bunch of things :) </span>
+    : <div> Well, so far there isn't much submitted, or, there is a whole bunch of things :) </div>
 
 )
 

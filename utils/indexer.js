@@ -28,19 +28,26 @@ function generateHid(file) {
 }
 
 
-const build = async () => {
+const build = async ({type_library}) => {
 
   let custom_types = [];
 
-  fs.readdir('custom_types', (err, files) => {
+  fs.readdir(type_library, (err, files) => {
     if (err)
       throw err;
 
     /**
      * Carry on if no errors
      */
-    files.forEach((file, index) => {
-      var file = fs.readFileSync(path.join('custom_types', file));
+    files.forEach(async (file, index) => {
+      if (fs.lstatSync(path.join(type_library, file)).isDirectory()) {
+        // split up the build function and make it recursive to one level.
+        // will help to look for the accepted thing and also the other stuff
+        return;
+      }
+
+      var file = fs.readFileSync(path.join(type_library, file));
+
       file = JSON.parse(file);
 
       custom_types.push({
@@ -49,15 +56,17 @@ const build = async () => {
         sha: generateSha(file),
         name: file.name,
         author: file.author,
+        status: file.status,
         username: file.username || null,
         description: file.description,
         custom_type: file.custom_type
       });
     });
 
-
     fs.writeFileSync(path.join('public', 'index.json'), JSON.stringify({ data: custom_types }, null, 2));
   });
 }
 
-build();
+build({
+  type_library: 'custom_types'
+});

@@ -1,0 +1,6 @@
+# Codeowners file
+# The below is the global one
+*       @ReeceM
+
+# The custom types files
+# /custom_types/type/*  @ReeceM

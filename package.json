@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^0.2.0",
+    "@octokit/auth-app": "^3.0.0",
     "@octokit/plugin-retry": "^3.0.7",
     "@octokit/plugin-throttling": "^3.4.1",
     "@octokit/rest": "^18.3.5",

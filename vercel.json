@@ -1,0 +1,6 @@
+
+{
+  "env": {
+    "APP_PRIVATE_KEY": "@app-private-key"
+  }
+}

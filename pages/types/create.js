@@ -11,6 +11,7 @@ export default function CreatePage({ links }) {
   const [file, setFile] = useState()
   const [website, setWebsite] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -23,21 +24,24 @@ export default function CreatePage({ links }) {
       return;
     }
 
-    let reader = new FileReader()
+    let reader = new FileReader();
+
     let customType = {
       author: author,
       username: username,
       name: name,
       description: description,
-      // license: '',
+      license: 'MIT',
       custom_type: {},
     };
-    reader.onload = (e) => {
-      customType.custom_type = JSON.parse(e.target.result);
 
-      console.log({
-        file, name, username, description, customType, author
-      })
+    reader.onload = (e) => {
+      try {
+        customType.custom_type = JSON.parse(e.target.result);
+      } catch (e) {
+        setError(e.toString());
+        setLoading(false);
+      }
 
       create({
         name,
@@ -47,6 +51,7 @@ export default function CreatePage({ links }) {
         author
       });
     }
+
     reader.readAsText(file[0])
   }
 
@@ -55,7 +60,13 @@ export default function CreatePage({ links }) {
       method: 'POST',
       body: JSON.stringify(type),
     })
-      .then(response => console.debug(response));
+      .then(response => console.debug(response))
+      .catch(error => {
+
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   return (
@@ -127,6 +138,7 @@ export default function CreatePage({ links }) {
                             name="description"
                             rows="3"
                             required={true}
+                            onChange={e => setDescription(e.target.value)}
                             className="shadow-sm focus:ring-teal-500 focus:border-teal-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
                             placeholder="This is a type library for a simple Blog Layout"></textarea>
                         </div>
@@ -205,6 +217,15 @@ export default function CreatePage({ links }) {
                         Submit
                       </button>
                     </div>
+                    {
+                      error
+                        ? (
+                          <div>
+                            {error}
+                          </div>
+                        )
+                        : null
+                    }
                   </div>
                 </form>
               </div>

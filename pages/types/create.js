@@ -12,6 +12,7 @@ export default function CreatePage({ links }) {
   const [website, setWebsite] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -32,6 +33,7 @@ export default function CreatePage({ links }) {
       name: name,
       description: description,
       license: 'MIT',
+      created_at: (new Date()).toJSON(),
       custom_type: {},
     };
 
@@ -60,9 +62,14 @@ export default function CreatePage({ links }) {
       method: 'POST',
       body: JSON.stringify(type),
     })
-      .then(response => console.debug(response))
+      .then(response => {
+        if (response.status == 200) {
+          setSuccess('New Type Submitted')
+        }
+        console.debug(response)
+      })
       .catch(error => {
-
+        setError(error.message)
       })
       .finally(() => {
         setLoading(false);
@@ -161,7 +168,7 @@ export default function CreatePage({ links }) {
                             id="name"
                             className="focus:ring-teal-500 focus:border-teal-500 flex-1 block w-full rounded sm:text-sm border-gray-300"
                             placeholder="Blog Post Example"
-                        />
+                          />
                         </div>
                         <p className="mt-2 text-sm text-gray-500">
                           A readable name for your Type, like what is shown in the writing room
@@ -179,13 +186,13 @@ export default function CreatePage({ links }) {
                             {
                               file
                                 ?
-                            <svg className="mx-auto h-12 w-12 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                                <svg className="mx-auto h-12 w-12 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
                                 :
-                            <svg className="mx-auto h-12 w-12 text-gray-400"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                            </svg>
+                                <svg className="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
                             }
                             <div className="flex text-sm text-gray-600">
                               <label htmlFor="file-upload"
@@ -201,7 +208,7 @@ export default function CreatePage({ links }) {
                                   className="sr-only"
                                 />
                               </label>
-                              <p className="pl-1">or <s>drag</s> and drop</p>
+                              <p className="pl-1">or <s>drag and drop</s></p>
                             </div>
                             <p className="text-xs text-gray-500">JSON </p>
                           </div>
@@ -226,6 +233,15 @@ export default function CreatePage({ links }) {
                         )
                         : null
                     }
+                    {/* {
+                      success
+                        ? (
+                          <div class="text-green-600">
+                            {success}
+                          </div>
+                        )
+                        : null
+                    } */}
                   </div>
                 </form>
               </div>

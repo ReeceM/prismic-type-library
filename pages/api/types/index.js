@@ -15,19 +15,22 @@ export default async function handler(req, res) {
     res.setHeader('Allow', ['POST'])
     res.status(405).end(`Method ${method} Not Allowed`)
   }
+
   let request = JSON.parse(body);
 
-  console.log(request)
-
-  const data = await octokit.issues.create({
+  const { status, data } = await octokit.issues.create({
     owner: process.env.REPO_OWNER,
     repo: process.env.REPO,
-    title: `[new Type] ${request.name} by ${request.author}`,
-    body: createIssueBody(request)
+    title: `Type Submission: ${request.name} by ${request.author}`,
+    body: createIssueBody(request),
+    labels: ['New Type']
   })
 
-  console.log(data);
-  res.status(200).json({ data })
+  if (status >= 200 && status < 300) {
+    res.status(200).json({ data })
+  }
+
+  res.status(status).json({ data })
 }
 
 function createIssueBody(data) {
@@ -36,11 +39,16 @@ function createIssueBody(data) {
   return `
 Submission of new type by ${data.author}
 
-/cc @${data.username}
+/cc ${data.username}
 
-The type file compiled:
+<details>
+<summary>The compiled type file for indexing: </summary>
+
 \`\`\`json
 ${JSON.stringify(data.customType, null, 2)}
 \`\`\`
-`
+</details>
+
+${(new Date()).toJSON()}
+`;
 }

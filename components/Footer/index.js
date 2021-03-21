@@ -36,7 +36,7 @@ const Footer = () => {
         </span>
       </div>
       <footer className="flex w-full justify-center text-sm pb-2">
-        Proudly hosted on <a href="https://vercel.com" className="text-blue-600 cursor-pointer tracking-wide" rel="noopener noreferrer">&nbsp;▲ Vercel</a>
+        Proudly hosted on <a href="https://vercel.com" className="text-blue-600 cursor-pointer tracking-wide" rel="noopener noreferrer">&nbsp;▲Vercel</a>
       </footer>
     </footer>
   )

@@ -220,7 +220,7 @@ export default function CreatePage({ links }) {
                     {
                       error
                         ? (
-                          <div>
+                          <div class="text-red-600">
                             {error}
                           </div>
                         )

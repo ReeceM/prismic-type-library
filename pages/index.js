@@ -5,7 +5,7 @@ import { CenteredHero } from '../components/Hero'
 import TypesTable from '../components/TypesTable';
 import { useEffect, useState } from 'react';
 import { data } from '../public/index.json';
-export default function IndexPage({ links, types }) {
+export default function IndexPage({ links, types, slice }) {
 
   // const [types, setTypes] = useState([])
 
@@ -39,11 +39,7 @@ export default function IndexPage({ links, types }) {
         /> */}
 
         <CenteredHero
-          slice={{
-            eyebrow: "Prismic Type Library",
-            title: "Hello to an Unofficial Prismic Types Library",
-            description: "This is a repo of sorts for a collection of Prismic Custom Types for various aspects of a CMS",
-          }}
+          slice={slice}
         />
 
         <main className="pb-20">
@@ -65,9 +61,15 @@ export async function getStaticProps() {
     { href: 'https://prismic.io', label: 'Prismic CMS' },
   ];
 
+  const slice = {
+    eyebrow: "Prismic Type Library",
+    title: "Hello, welcome to an Unofficial Prismic Types Library",
+    description: `This is a repo of sorts for a collection of Prismic Custom Types for various aspects of a CMS.`,
+  }
+
   let types = data;
 
   return {
-    props: { links, types },
+    props: { links, types, slice },
   }
 }

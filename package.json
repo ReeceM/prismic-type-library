@@ -24,10 +24,11 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.2.1",
+    "@tailwindcss/jit": "^0.1.10",
     "@tailwindcss/ui": "^0.7.2",
     "autoprefixer": "10.0.2",
     "postcss": "^8.2.8",
-    "tailwindcss": "^2.0.3"
+    "tailwindcss": "^2.0.4"
   },
   "license": "MIT"
 }

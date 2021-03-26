@@ -16,6 +16,10 @@ body {
   @apply px-4 py-2 font-bold text-white bg-teal-500 rounded;
 }
 
+*::selection {
+  @apply bg-teal-300;
+}
+
 /* Start purging... */
 @tailwind utilities;
 /* Stop purging. */

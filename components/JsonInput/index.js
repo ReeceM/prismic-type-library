@@ -14,7 +14,6 @@ const JsonInput = ({ onUpdated, newJson }) => {
       parsed = error
     }
 
-    console.debug(parsed)
     setJson(parsed);
   }
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Head from 'next/head';
 import Layout from '../../components/Layout'
+import JsonInput from '../../components/JsonInput';
 
 export default function CreatePage({ links }) {
 
@@ -13,6 +14,17 @@ export default function CreatePage({ links }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [useInput, setUseInput] = useState(false)
+
+  const [customType, setCustomType] = useState({
+    author: author,
+    username: username,
+    name: name,
+    description: description,
+    license: 'MIT',
+    created_at: (new Date()).toJSON(),
+    custom_type: {},
+  })
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -27,15 +39,7 @@ export default function CreatePage({ links }) {
 
     let reader = new FileReader();
 
-    let customType = {
-      author: author,
-      username: username,
-      name: name,
-      description: description,
-      license: 'MIT',
-      created_at: (new Date()).toJSON(),
-      custom_type: {},
-    };
+    // set custom type
 
     reader.onload = (e) => {
       try {
@@ -63,7 +67,7 @@ export default function CreatePage({ links }) {
       body: JSON.stringify(type),
     })
       .then(response => {
-        if (response.status == 200) {
+        if (response.status >= 200 && response.status < 300) {
           setSuccess('New Type Submitted')
         }
         console.debug(response)
@@ -116,7 +120,7 @@ export default function CreatePage({ links }) {
                       </div>
 
                       <div>
-                        <label for="author" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="author" className="block text-sm font-medium text-gray-700">
                           Author Name
                             </label>
                         <div className="mt-1">
@@ -136,7 +140,7 @@ export default function CreatePage({ links }) {
                       </div>
 
                       <div>
-                        <label for="description" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
                           Description
                             </label>
                         <div className="mt-1">
@@ -155,7 +159,7 @@ export default function CreatePage({ links }) {
                       </div>
 
                       <div>
-                        <label for="author" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="author" className="block text-sm font-medium text-gray-700">
                           Custom Type Name
                             </label>
                         <div className="mt-1">
@@ -179,40 +183,61 @@ export default function CreatePage({ links }) {
                         <label className="block text-sm font-medium text-gray-700">
                           JSON File
                         </label>
-                        <div
-                          className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
-                        >
-                          <div className="space-y-1 text-center">
-                            {
-                              file
-                                ?
-                                <svg className="mx-auto h-12 w-12 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                :
-                                <svg className="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                </svg>
-                            }
-                            <div className="flex text-sm text-gray-600">
-                              <label htmlFor="file-upload"
-                                className="relative cursor-pointer bg-white rounded-md font-medium text-teal-600 hover:text-teal-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-teal-500">
-                                <span>Upload a file</span>
-                                <input
-                                  required={true}
-                                  aria-required={true}
-                                  id="file-upload"
-                                  name="file-upload"
-                                  type="file"
-                                  onChange={e => setFile(e.target.files)}
-                                  className="sr-only"
-                                />
-                              </label>
-                              <p className="pl-1">or <s>drag and drop</s></p>
-                            </div>
-                            <p className="text-xs text-gray-500">JSON </p>
-                          </div>
+                        <div className="inline-flex w-full justify-end">
+                          <button
+                            onClick={e => setUseInput(!useInput)}
+                            className="text-teal-400 text-xs font-semibold font-mono"
+                            type="button"
+                          >
+                            {!useInput ? 'Paste Markup' : 'Upload File'}
+                          </button>
                         </div>
+
+                        {
+                          useInput === false
+                            ? (
+                              <div
+                                className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
+                              >
+                                <div className="space-y-1 text-center">
+                                  {
+                                    file
+                                      ?
+                                      <svg className="mx-auto h-12 w-12 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                      </svg>
+                                      :
+                                      <svg className="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                      </svg>
+                                  }
+                                  <div className="flex text-sm text-gray-600">
+                                    <label htmlFor="file-upload"
+                                      className="relative cursor-pointer bg-white rounded-md font-medium text-teal-600 hover:text-teal-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-teal-500">
+                                      <span>Upload a file</span>
+                                      <input
+                                        required={true}
+                                        aria-required={true}
+                                        id="file-upload"
+                                        name="file-upload"
+                                        type="file"
+                                        onChange={e => setFile(e.target.files)}
+                                        className="sr-only"
+                                      />
+                                    </label>
+                                    <p className="pl-1">or <s>drag and drop</s></p>
+                                  </div>
+                                  <p className="text-xs text-gray-500">JSON </p>
+                                </div>
+                              </div>
+                            )
+                            :
+                            <JsonInput
+                              newJson={customType.custom_type}
+                              onUpdated={e => customType.custom_type = e}
+                            />
+                        }
+
                       </div>
                     </div>
                     <input type="url" name="website" placeholder="what was it that Pooh Bear got honey from, this is that" id="website" onChange={e => setWebsite(e.target.value)} className="sr-only" aria-disabled="true" />
@@ -233,7 +258,7 @@ export default function CreatePage({ links }) {
                         )
                         : null
                     }
-                    {/* {
+                    {
                       success
                         ? (
                           <div class="text-green-600">
@@ -241,7 +266,7 @@ export default function CreatePage({ links }) {
                           </div>
                         )
                         : null
-                    } */}
+                    }
                   </div>
                 </form>
               </div>

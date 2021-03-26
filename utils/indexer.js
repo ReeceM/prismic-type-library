@@ -41,6 +41,8 @@ const build = async ({type_library}) => {
      */
     files.forEach(async (file, index) => {
       if (fs.lstatSync(path.join(type_library, file)).isDirectory()) {
+        // TODO: Make the types be split by [username]/[type]/...files
+          // this would allow tagging with .accepted notes and also codeowner tag a dir
         // split up the build function and make it recursive to one level.
         // will help to look for the accepted thing and also the other stuff
         return;

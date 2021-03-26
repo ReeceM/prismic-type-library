@@ -9,7 +9,7 @@ export default function CreatePage({ links }) {
   const [author, setAuthor] = useState()
   const [name, setName] = useState()
   const [description, setDescription] = useState()
-  const [file, setFile] = useState()
+  const [file, setFile] = useState(null)
   const [website, setWebsite] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -34,6 +34,18 @@ export default function CreatePage({ links }) {
     // handle the honeypot value
     if (website.length >= 1) {
       window.location.href = 'https://www.youtube.com/watch?v=YddwkMJG1Jo'
+      return;
+    }
+
+    if (!Array.isArray(file)) {
+      create({
+        name,
+        username,
+        description,
+        customType,
+        author
+      });
+
       return;
     }
 
@@ -67,9 +79,11 @@ export default function CreatePage({ links }) {
       body: JSON.stringify(type),
     })
       .then(response => {
+
         if (response.status >= 200 && response.status < 300) {
-          setSuccess('New Type Submitted')
+          setSuccess('🎉 New Type Submitted')
         }
+
         console.debug(response)
       })
       .catch(error => {
@@ -269,8 +283,8 @@ export default function CreatePage({ links }) {
                     {
                       error
                         ? (
-                          <div class="text-red-600">
-                            {error}
+                          <div class="text-red-600  bg-red-100 rounded-b px-6 py-3">
+                            ❌ {error}
                           </div>
                         )
                         : null
@@ -278,7 +292,7 @@ export default function CreatePage({ links }) {
                     {
                       success
                         ? (
-                          <div class="text-green-600">
+                          <div class="text-green-600 bg-green-100 rounded-b px-6 py-3 tracking-wider leading-loose">
                             {success}
                           </div>
                         )
@@ -289,8 +303,6 @@ export default function CreatePage({ links }) {
               </div>
             </div>
           </div>
-
-
         </section>
       </Layout>
     </>

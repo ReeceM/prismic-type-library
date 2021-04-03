@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Head from 'next/head';
 import Layout from '../../components/Layout'
 import JsonInput from '../../components/JsonInput';
+import DragDrop from '../../components/DragDrop';
 
 export default function CreatePage({ links }) {
 
@@ -37,6 +38,28 @@ export default function CreatePage({ links }) {
       return;
     }
 
+    if (file instanceof FileList || file instanceof File) {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          customType.custom_type = JSON.parse(e.target.result);
+        } catch (e) {
+          setError(e.toString());
+          setLoading(false);
+        }
+
+        create({
+          name,
+          username,
+          description,
+          customType,
+          author
+        });
+      }
+
+      reader.readAsText(file[0])
+    }
+
     if (!Array.isArray(file)) {
       create({
         name,
@@ -49,28 +72,6 @@ export default function CreatePage({ links }) {
       return;
     }
 
-    let reader = new FileReader();
-
-    // set custom type
-
-    reader.onload = (e) => {
-      try {
-        customType.custom_type = JSON.parse(e.target.result);
-      } catch (e) {
-        setError(e.toString());
-        setLoading(false);
-      }
-
-      create({
-        name,
-        username,
-        description,
-        customType,
-        author
-      });
-    }
-
-    reader.readAsText(file[0])
   }
 
   function create(type) {
@@ -79,14 +80,19 @@ export default function CreatePage({ links }) {
       body: JSON.stringify(type),
     })
       .then(response => {
-
+        setError(false)
         if (response.status >= 200 && response.status < 300) {
-          setSuccess('🎉 New Type Submitted')
+          setSuccess({
+            message: '🎉 New Type Submitted',
+            url: response.url,
+            title: response.title
+          })
         }
 
         console.debug(response)
       })
       .catch(error => {
+        setSuccess(false)
         setError(error.message)
       })
       .finally(() => {
@@ -99,8 +105,8 @@ export default function CreatePage({ links }) {
       <Head>
         <title>Create New Type</title>
       </Head>
-      <Layout menu={{ links: links }}>
-        <section className="py-8 px-12 mx-auto">
+      <Layout menu={{links}}>
+        <section className="py-8 px-0 md:px-12 mx-auto">
           <div>
             <div className="md:grid md:grid-cols-3 md:gap-6">
               <div className="md:col-span-1">
@@ -114,8 +120,8 @@ export default function CreatePage({ links }) {
                 <form action="#" method="POST" onSubmit={handleSubmit}>
                   <div className="shadow sm:rounded-md sm:overflow-hidden">
                     <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
-                      <div className="grid grid-cols-3 gap-6">
-                        <div className="col-span-3 sm:col-span-2">
+                      <div className="grid grid-cols-2 gap-6">
+                        <div className="col-span-2 sm:col-span-1">
                           <label htmlFor="username"
                             className="block text-sm font-medium text-gray-700">Username</label>
                           <div className="mt-1 flex rounded-md shadow-sm">
@@ -131,26 +137,23 @@ export default function CreatePage({ links }) {
                               placeholder="Github username" />
                           </div>
                         </div>
-                      </div>
 
-                      <div>
-                        <label htmlFor="author" className="block text-sm font-medium text-gray-700">
-                          Author Name
-                            </label>
-                        <div className="mt-1">
-                          <input
-                            onChange={e => setAuthor(e.target.value)}
-                            type="text"
-                            required={true}
-                            aria-required={true}
-                            name="author"
-                            id="author"
-                            className="focus:ring-teal-500 focus:border-teal-500 flex-1 block w-full rounded sm:text-sm border-gray-300"
-                            placeholder="Your Name" />
+                        <div className="col-span-2 sm:col-span-1">
+                          <label htmlFor="author" className="block text-sm font-medium text-gray-700">
+                            Author Name
+                              </label>
+                          <div className="mt-1">
+                            <input
+                              onChange={e => setAuthor(e.target.value)}
+                              type="text"
+                              required={true}
+                              aria-required={true}
+                              name="author"
+                              id="author"
+                              className="focus:ring-teal-500 focus:border-teal-500 flex-1 block w-full rounded sm:text-sm border-gray-300"
+                              placeholder="Your Name" />
+                          </div>
                         </div>
-                        <p className="mt-2 text-sm text-gray-500">
-                          Please place your name here please
-                        </p>
                       </div>
 
                       <div>
@@ -227,40 +230,46 @@ export default function CreatePage({ links }) {
                         {
                           useInput === false
                             ? (
-                              <div
-                                className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
+                              <DragDrop
+                                id="file_drop_zone"
+                                onDropEvent={droppedFile => document.querySelector('#file-upload').files = droppedFile}
+                                onDragStart={e => console.log(e)}
+                                onDragEnd={e => console.log(e)}
+                                className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md relative"
+                                activeClass="border-teal-300 bg-white z-10"
+                                inactiveClass="border-gray-300"
                               >
-                                <div className="space-y-1 text-center">
-                                  {
-                                    file
-                                      ?
-                                      <svg className="mx-auto h-12 w-12 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                      </svg>
-                                      :
-                                      <svg className="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                      </svg>
-                                  }
-                                  <div className="flex text-sm text-gray-600">
-                                    <label htmlFor="file-upload"
-                                      className="relative cursor-pointer bg-white rounded-md font-medium text-teal-600 hover:text-teal-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-teal-500">
-                                      <span>Upload a file</span>
-                                      <input
-                                        required={true}
-                                        aria-required={true}
-                                        id="file-upload"
-                                        name="file-upload"
-                                        type="file"
-                                        onChange={e => setFile(e.target.files)}
-                                        className="sr-only"
-                                      />
-                                    </label>
-                                    <p className="pl-1">or <s>drag and drop</s></p>
+                                 <div className="space-y-1 text-center">
+                                    {
+                                      file
+                                        ?
+                                        <svg className="mx-auto h-12 w-12 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        :
+                                        <svg className="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                        </svg>
+                                    }
+                                    <div className="flex text-sm text-gray-600">
+                                      <label htmlFor="file-upload"
+                                        className="relative cursor-pointer bg-white rounded-md font-medium text-teal-600 hover:text-teal-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-teal-500">
+                                        <span>Upload a file</span>
+                                        <input
+                                          required={true}
+                                          aria-required={true}
+                                          id="file-upload"
+                                          name="file-upload"
+                                          type="file"
+                                          onChange={e => setFile(e.target.files)}
+                                          className="sr-only"
+                                        />
+                                      </label>
+                                      <p className="pl-1">or drag and drop</p>
+                                    </div>
+                                    <p className="text-xs text-gray-500">JSON </p>
                                   </div>
-                                  <p className="text-xs text-gray-500">JSON </p>
-                                </div>
-                              </div>
+                              </DragDrop>
                             )
                             :
                             <JsonInput
@@ -277,13 +286,13 @@ export default function CreatePage({ links }) {
                         type="submit"
                         disabled={loading}
                         className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-                        Submit
+                        {!loading ? 'Submit' : 'Sending...'}
                       </button>
                     </div>
                     {
                       error
                         ? (
-                          <div class="text-red-600  bg-red-100 rounded-b px-6 py-3">
+                          <div className="text-red-600  bg-red-100 rounded-b px-6 py-3">
                             ❌ {error}
                           </div>
                         )
@@ -292,8 +301,8 @@ export default function CreatePage({ links }) {
                     {
                       success
                         ? (
-                          <div class="text-green-600 bg-green-100 rounded-b px-6 py-3 tracking-wider leading-loose">
-                            {success}
+                          <div className="text-green-600 bg-green-100 rounded-b px-6 py-3 tracking-wider leading-loose">
+                            <strong>{success.message}</strong> - View Issue: <a href={success.url} className="hover:underline">{success.title ? success.title : success.url}</a>
                           </div>
                         )
                         : null
@@ -310,15 +319,8 @@ export default function CreatePage({ links }) {
 }
 
 export async function getStaticProps() {
-  const links = [
-    { href: '/', label: 'Custom Types' },
-    { href: '/types/create', label: 'Submit a Type' },
-    { href: 'https://github.com/ReeceM/prismic-type-library/discussions', label: 'Help' },
-    { href: 'https://github.com/ReeceM/prismic-type-library', label: 'Readme' },
-    { href: 'https://prismic.io', label: 'Prismic CMS' },
-  ];
 
   return {
-    props: { links },
+    props: {  },
   }
 }

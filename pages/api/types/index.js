@@ -14,9 +14,19 @@ export default async function handler(req, res) {
   if (method !== 'POST') {
     res.setHeader('Allow', ['POST'])
     res.status(405).end(`Method ${method} Not Allowed`)
+
+    // cause I don't trust it...
+    return;
   }
 
   let request = JSON.parse(body);
+
+  if (Object.keys(request.customType).length <= 0) {
+    res.status(422).json({ message: 'JSON content was empty?' })
+
+    // cause I don't trust it...
+    return;
+  }
 
   const { status, data } = await octokit.issues.create({
     owner: process.env.REPO_OWNER,
@@ -26,11 +36,18 @@ export default async function handler(req, res) {
     labels: ['New Type']
   })
 
-  if (status >= 200 && status < 300) {
-    res.status(200).json({ data })
+  let response = {
+    html_url: data?.html_url,
+    title: data?.title,
   }
 
-  res.status(status).json({ data })
+  if (status >= 200 && status < 300) {
+    res.status(200).json(response)
+    return
+  }
+
+  res.status(status).json(response)
+  return
 }
 
 function createIssueBody(data) {

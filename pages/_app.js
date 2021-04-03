@@ -1,7 +1,21 @@
+import React from 'react'
+import NextApp from 'next/app'
 import '../styles/index.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+let links = [
+  { href: '/', label: 'Custom Types' },
+  { href: '/types/create', label: 'Submit a Type' },
+  { href: 'https://github.com/ReeceM/prismic-type-library/discussions', label: 'Help' },
+  { href: 'https://github.com/ReeceM/prismic-type-library', label: 'Readme' },
+  { href: 'https://prismic.io', label: 'Prismic CMS' },
+];
 
-export default MyApp
+export default class App extends NextApp {
+  render() {
+    const { Component, pageProps } = this.props
+
+    return (
+      <Component {...pageProps} links={ links } />
+    )
+  }
+}

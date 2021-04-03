@@ -2,6 +2,7 @@
   "name": "everything-bagel",
   "author": "Reece M",
   "username": "ReeceM",
+  "status": true,
   "description": "A test of all libs",
   "custom_type": {
     "Main": {

@@ -28,7 +28,7 @@ export default function IndexPage({ links, types, slice }) {
       <Head>
         <title>(Unofficial) Prismic Type Library</title>
       </Head>
-      <Layout menu={{ links: links }}>
+      <Layout menu={{ links }}>
 
         {/* <Banner slice={{
           shortMessage: "hello",
@@ -53,14 +53,6 @@ export default function IndexPage({ links, types, slice }) {
 }
 
 export async function getStaticProps() {
-  const links = [
-    { href: '/', label: 'Custom Types' },
-    { href: '/types/create', label: 'Submit a Type' },
-    { href: 'https://github.com/ReeceM/prismic-type-library/discussions', label: 'Help' },
-    { href: 'https://github.com/ReeceM/prismic-type-library', label: 'Readme' },
-    { href: 'https://prismic.io', label: 'Prismic CMS' },
-  ];
-
   const slice = {
     eyebrow: "Prismic Type Library",
     title: "Hello, welcome to an Unofficial Prismic Types Library",
@@ -70,6 +62,6 @@ export async function getStaticProps() {
   let types = data;
 
   return {
-    props: { links, types, slice },
+    props: { types, slice },
   }
 }

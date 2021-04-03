@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 
 const Layout = ({ children, menu }) => {
   return (
-    <>
+    <section className="dark:bg-cool-gray-800">
       <Navbar
         links={menu?.links}
       />
@@ -11,7 +11,7 @@ const Layout = ({ children, menu }) => {
       { children}
 
       <Footer />
-    </>
+    </section>
   )
 }
 

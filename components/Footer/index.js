@@ -1,8 +1,8 @@
 const Footer = () => {
   return (
     <footer>
-      <div className="text-gray-700 px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
-        <a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+      <div className="text-gray-700 dark:text-cool-gray-50 px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+        <a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900 dark:text-cool-gray-50">
           {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-10 h-10 text-white p-2 bg-teal-500 rounded-full" viewBox="0 0 24 24">
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
           </svg>  */}
@@ -14,7 +14,7 @@ const Footer = () => {
             target="_blank">@iexistin3d</a>
         </p>
         <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
-          <a className="text-gray-500 hover:text-gray-700 cursor-pointer"
+          <a className="text-gray-500 hover:text-gray-700 dark:text-cool-gray-50 cursor-pointer"
             href="https://github.com/reecem/prismic-type-library?ref=netlify-app">
             <svg className="fill-current w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
               <title>GitHub</title>
@@ -23,7 +23,7 @@ const Footer = () => {
               </path>
             </svg>
           </a>
-          <a className="ml-3 text-gray-500 hover:text-gray-700 cursor-pointer"
+          <a className="ml-3 text-gray-500 hover:text-gray-700 dark:text-cool-gray-50 cursor-pointer"
             href="https://twitter.com/iexistin3d">
             <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
               className="w-5 h-5" viewBox="0 0 24 24">
@@ -35,7 +35,7 @@ const Footer = () => {
           </a>
         </span>
       </div>
-      <footer className="flex w-full justify-center text-sm pb-2">
+      <footer className="flex w-full justify-center text-sm pb-2 text-black dark:text-white">
         Proudly hosted on <a href="https://vercel.com" className="text-blue-600 cursor-pointer tracking-wide" rel="noopener noreferrer">&nbsp;▲Vercel</a>
       </footer>
     </footer>

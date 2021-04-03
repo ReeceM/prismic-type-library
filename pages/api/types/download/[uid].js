@@ -18,7 +18,7 @@ export default function handler(req, res) {
   let file = fs.readFileSync(dir);
   let {data} = JSON.parse(file.toString())
 
-  let custom_type = data.filter(t => t.hid === uid);
+  let custom_type = data.filter(t => t.sha === uid);
 
   if (!custom_type || custom_type.length <= 0) {
     res.status(404).end(`Custom Type: ${uid} not found`);

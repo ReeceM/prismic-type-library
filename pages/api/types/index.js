@@ -14,12 +14,18 @@ export default async function handler(req, res) {
   if (method !== 'POST') {
     res.setHeader('Allow', ['POST'])
     res.status(405).end(`Method ${method} Not Allowed`)
+
+    // cause I don't trust it...
+    return;
   }
 
   let request = JSON.parse(body);
 
   if (Object.keys(request.customType).length <= 0) {
-    res.status(422).json({message: 'JSON content was empty?'})
+    res.status(422).json({ message: 'JSON content was empty?' })
+
+    // cause I don't trust it...
+    return;
   }
 
   const { status, data } = await octokit.issues.create({
@@ -31,7 +37,7 @@ export default async function handler(req, res) {
   })
 
   let response = {
-    url: data?.html_url,
+    html_url: data?.html_url,
     title: data?.title,
   }
 

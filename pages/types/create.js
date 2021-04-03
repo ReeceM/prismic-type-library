@@ -84,7 +84,7 @@ export default function CreatePage({ links }) {
         if (response.status >= 200 && response.status < 300) {
           setSuccess({
             message: '🎉 New Type Submitted',
-            url: response.url,
+            url: response.html_url,
             title: response.title
           })
         }

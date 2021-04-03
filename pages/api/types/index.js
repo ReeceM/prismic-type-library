@@ -18,6 +18,10 @@ export default async function handler(req, res) {
 
   let request = JSON.parse(body);
 
+  if (Object.keys(request.customType).length <= 0) {
+    res.status(422).json({message: 'JSON content was empty?'})
+  }
+
   const { status, data } = await octokit.issues.create({
     owner: process.env.REPO_OWNER,
     repo: process.env.REPO,
@@ -26,11 +30,18 @@ export default async function handler(req, res) {
     labels: ['New Type']
   })
 
-  if (status >= 200 && status < 300) {
-    res.status(200).json({ data })
+  let response = {
+    url: data?.html_url,
+    title: data?.title,
   }
 
-  res.status(status).json({ data })
+  if (status >= 200 && status < 300) {
+    res.status(200).json(response)
+    return
+  }
+
+  res.status(status).json(response)
+  return
 }
 
 function createIssueBody(data) {

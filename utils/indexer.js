@@ -1,6 +1,7 @@
 let fs = require('fs');
 let path = require('path');
 let crypto = require('crypto')
+let appVersion = require('../package.json').version
 
 /**
  * Generate a SHA1 of the file, can be used rather than the hid?
@@ -41,6 +42,7 @@ const build = async ({type_library}) => {
      */
     files.forEach(async (file, index) => {
       if (fs.lstatSync(path.join(type_library, file)).isDirectory()) {
+        console.info('[INFO] There seems to be a directory director, what shall we dictate?');
         // TODO: Make the types be split by [username]/[type]/...files
           // this would allow tagging with .accepted notes and also codeowner tag a dir
         // split up the build function and make it recursive to one level.
@@ -54,6 +56,7 @@ const build = async ({type_library}) => {
 
       custom_types.push({
         id: index + 1,
+        _version: appVersion,
         hid: generateHid(file),
         sha: generateSha(file),
         name: file.name,

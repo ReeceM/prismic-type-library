@@ -4,7 +4,7 @@ import Banner from '../components/Banner'
 import { CenteredHero } from '../components/Hero'
 import TypesTable from '../components/TypesTable';
 import { useEffect, useState } from 'react';
-import { data } from '../public/index.json';
+import { default as data } from '../public/index.json';
 export default function IndexPage({ links, types, slice }) {
 
   // const [types, setTypes] = useState([])
@@ -59,7 +59,7 @@ export async function getStaticProps() {
     description: `This is a repo of sorts for a collection of Prismic Custom Types for various aspects of a CMS.`,
   }
 
-  let types = data;
+  let types = data.data;
 
   return {
     props: { types, slice },

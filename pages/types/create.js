@@ -111,9 +111,10 @@ export default function CreatePage({ links }) {
             <div className="md:grid md:grid-cols-3 md:gap-6">
               <div className="md:col-span-1">
                 <div className="px-4 sm:px-0">
-                  <h3 className="mb-5 text-3xl font-medium leading-6 text-gray-900">Submit a Type</h3>
-                  <p className="mt-1 text-sm text-gray-600">Use this form to create a new issue on the type library to have it added to the list. Currently it will be manually reviewed and added</p>
-                  <p className="mt-1 text-sm text-gray-600">I suggest using your Github username, what I will do is add your name as a <code className="px-0.5 py-0.5 text-xs rounded-sm tracking-wide">`.CODEOWNER`</code> when making the type entry</p>
+                  <h3 className="mb-5 text-3xl font-medium leading-6 text-gray-900 dark:text-cool-gray-50">Submit a Type</h3>
+                  <p className="mt-1 text-sm text-gray-600 dark:text-cool-gray-200">Use this form to create a new issue on the type library to have it added to the list. Currently it will be manually reviewed and added</p>
+                  <p className="mt-1 text-sm text-gray-600 dark:text-cool-gray-200">I suggest using your Github username, what I will do is add your name as a <code className="px-0.5 py-0.5 text-xs rounded-sm tracking-wide">`.CODEOWNER`</code> when making the type entry</p>
+                  <p className="dark:opacity-100 opacity-0  text-white">Dark mode coming here soon :)</p>
                 </div>
               </div>
               <div className="mt-5 md:mt-0 md:col-span-2">

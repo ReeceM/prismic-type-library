@@ -2,7 +2,7 @@ import React from 'react'
 
 const Centered = ({ slice }) => (
   <section className="text-gray-700 body-font">
-    <div className="container px-8 py-20 mx-auto lg:px-4">
+    <div className="container px-8 py-10 md:py-20 mx-auto lg:px-4">
       <div className="flex flex-col w-full mb-12 text-left lg:text-center">
         {
           slice?.eyebrow ?
@@ -10,7 +10,7 @@ const Centered = ({ slice }) => (
             : null
         }
 
-        <h1 className="mb-6 text-2xl font-semibold tracking-tighter text-gray-800 dark:text-gray-100 sm:text-5xl title-font">
+        <h1 className="mb-6 text-2xl font-semibold tracking-tight md:tracking-tighter text-gray-800 dark:text-gray-100 sm:text-5xl title-font">
           {slice.title}
         </h1>
         <p className="mx-auto text-base font-medium leading-relaxed text-gray-700 dark:text-gray-100 lg:w-2/3">

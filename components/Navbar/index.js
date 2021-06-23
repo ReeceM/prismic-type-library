@@ -18,10 +18,11 @@ const Navbar = ({ secondary, openSettings, openShareModal, links }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 text-teal-100 hover:text-teal-400">
               <Link href="/">
-                <a href="/">
-                  <Logo className="w-8 h-8 text-teal-100" />
+                <a href="/" className="flex gap-1 items-center ">
+                  <Logo className="w-8 h-8" />
+                  <span className="ml-2 mr-auto">Prismic Type Library</span>
                 </a>
               </Link>
             </div>

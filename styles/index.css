@@ -1,11 +1,6 @@
-@tailwind base;
-
-/* Write your own custom base styles here */
-
-/* Start purging... */
-@tailwind components;
-/* Stop purging. */
-
+/**
+ * Our styles
+ */
 html,
 body {
   @apply bg-gray-50 dark:bg-gray-900 overflow-x-hidden;
@@ -20,8 +15,6 @@ body {
   @apply bg-teal-300;
 }
 
-/* Start purging... */
-@tailwind utilities;
-/* Stop purging. */
-
-/* Your own custom utilities */
+.react-json-view {
+  @apply px-3 md:px-12 py-4
+}

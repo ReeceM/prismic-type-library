@@ -16,5 +16,5 @@ body {
 }
 
 .react-json-view {
-  @apply px-3 md:px-12 py-4
+  @apply px-3 md:px-12 py-4;
 }

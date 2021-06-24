@@ -1,5 +1,6 @@
 import Table from "./Table";
 import StatusBadge from './StatusBadge'
+import { DownloadIcon, EyeIcon } from "@heroicons/react/outline";
 
 const EmptyState = () => (
   <div className="w-full flex flex-col items-center border p-4 bg-gray-50 shadow rounded-md dark:bg-gray-700 dark:text-white">
@@ -66,21 +67,16 @@ const TypesTable = ({ types }) => (
                     href={useDownloadRoute(type)}
                     title={`download type ${type.name}`}
                     className="text-teal-600 hover:text-teal-900 dark:text-teal-300 dark:hover:text-teal-50">
-                    <span className="sr-only">Download</span>
-                    <svg className="w-6 h-6" title="download" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
+                      <span className="sr-only">Download {type.name}</span>
+                      <DownloadIcon className="w-6 h-6" aria-hidden="true"/>
                   </a>
 
                   <a
                     href={useViewRoute(type)}
                     title={`view type ${type.name}`}
                     className="text-teal-600 hover:text-teal-900 dark:text-teal-300 dark:hover:text-teal-50">
-                    <span className="sr-only">View</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
+                      <span className="sr-only">View {type.name}</span>
+                      <EyeIcon className="w-6 h-6" />
                   </a>
                 </div>
               </Table.Column>

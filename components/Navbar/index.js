@@ -22,7 +22,7 @@ const Navbar = ({ secondary, openSettings, openShareModal, links }) => {
               <Link href="/">
                 <a href="/" className="flex gap-1 items-center ">
                   <Logo className="w-8 h-8" />
-                  <span className="ml-2 mr-auto">Prismic Type Library</span>
+                  {/* <span className="ml-2 mr-auto">Prismic Type Library</span> */}
                 </a>
               </Link>
             </div>
